@@ -1,0 +1,41 @@
+{
+  "name": "Smogon-Helper",
+  "version": "0.0.1",
+  "manifest_version": 1,
+  "author": "Prayansh Srivastava",
+  "description": "Smogon popups for abilities/moves/items",
+  "icons": {
+    "16": "img/16x16.png",
+    "48": "img/48x48.png",
+    "128": "img/128x128.png" },
+  "page_action": {
+    "default_icon": {
+      "19": "icons/19x19.png",
+      "38": "icons/38x38.png"
+    },
+    "default_title": "Smogon"
+  },
+  "background": {
+    "scripts": ["js/eventPage.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.smogon.com/dex/*"
+      ],
+      "css": ["bootstrap.min.css", "display.css"],
+      "js": [
+        "js/jquery.min.js",
+        "js/bootstrap.min.js",
+        "js/popoverHelpers.js",
+        "js/helpers.js",
+        "institutions/ubc.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "http://pokeapi.co/*"
+  ]
+}
