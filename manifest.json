@@ -22,15 +22,15 @@
   "content_scripts": [
     {
       "matches": [
-        "http://www.smogon.com/dex/*"
+        "http://www.smogon.com/dex/xy/pokemon/*"
       ],
-      "css": ["bootstrap.min.css", "display.css"],
+      "css": ["css/bootstrap.min.css", "css/display.css"],
       "js": [
         "js/jquery.min.js",
         "js/bootstrap.min.js",
         "js/popoverHelpers.js",
         "js/helpers.js",
-        "institutions/ubc.js"
+        "js/peek.js"
       ],
       "run_at": "document_idle"
     }

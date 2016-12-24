@@ -1,0 +1,61 @@
+.popover.size{
+    width: 326px;
+    max-width: 326px;
+}
+
+.tool-tip {
+    cursor: pointer;
+}
+
+.inactive-link {
+    cursor: default;
+}
+
+.popover .popover-title {
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.popover-plain-text {
+    text-align: center;
+    width: 100%;
+    padding-top: 2%;
+    padding-bottom: 4%;
+    font-weight: normal;
+}
+
+.smogon-link {
+    text-align: center;
+    float: left;
+    width: 100%;
+    padding-top: 2%;
+    padding-bottom: 5%;
+}
+
+.overall-quality{
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+
+.grade {
+    padding-top: 2%;
+    width: 50%;
+    float: left;
+    overflow: hidden;
+}
+
+.title {
+    font-weight: 700;
+    position: relative;
+    text-align: center;
+}
+
+.value {
+    font-weight: 400;
+}
+
+.underline {
+    text-decoration: underline;
+}
