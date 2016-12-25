@@ -25,14 +25,17 @@ function popoverOptionsAbility($elem, ability, placement) {
  * @param smogonUrl of item/ability using abilityUrl()/itemUrl()
  * @returns {Element}
  */
-function makePopover(description, smogonUrl) {
+function makePopover(description, smogonUrl, gen) {
 
+    var genDiv = individualDiv('gen', gen);
     var descDiv = individualDiv('description', 'Description', description);
+
     var smogonDiv = document.createElement('div');
     smogonDiv.className = 'smogon-link';
     smogonDiv.innerHTML = '<a href="' + smogonUrl + '" onclick="window.open(\'' + smogonUrl + '\', \'_blank\')">GOTO</a>';
 
     var popoverElement = document.createElement('div');
+    popoverElement.appendChild(genDiv);
     popoverElement.appendChild(descDiv);
     // popoverElement.appendChild(smogonDiv);
 
@@ -43,16 +46,20 @@ function individualDiv(mainClass, title, value) {
 
     var parentDiv = document.createElement('div');
     var titleDiv = document.createElement('div');
-    var valueDiv = document.createElement('div');
+    if (value)
+        var valueDiv = document.createElement('div');
 
     parentDiv.className = mainClass;
     titleDiv.className = 'title';
-    valueDiv.className = 'value';
+    if (value)
+        valueDiv.className = 'value';
 
     titleDiv.innerText = title;
-    valueDiv.innerText = value;
+    if (value)
+        valueDiv.innerText = value;
 
-    titleDiv.appendChild(valueDiv);
+    if (value)
+        titleDiv.appendChild(valueDiv);
     parentDiv.appendChild(titleDiv);
 
     return parentDiv;

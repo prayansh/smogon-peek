@@ -48,7 +48,7 @@ function xhrRequest(ability) {
                         $elem.data('bs.popover').options.content = popoverTextContentDiv('Ability Not Found');
                     });
                 } else {
-                    var gen = response.generation.name;
+                    var gen = (response.generation.name).replace('generation-', 'gen-');
                     var pokemon = [];
                     response.pokemon.forEach(function (p) {
                         pokemon.push(p.pokemon.name);
@@ -56,13 +56,12 @@ function xhrRequest(ability) {
                     var entry = response.effect_entries[0];
                     var desc = entry.effect;
                     var shortDesc = entry.short_effect;
-                    var popoverContent = makePopover(desc, abilityUrl(ability.code));
+                    var popoverContent = makePopover(desc, abilityUrl(ability.code), gen);
                     $('#' + ability.name.charAt(0) + ability.index).each(function () {
                         var $elem = $(this);
                         $elem.data('bs.popover').options.content = popoverContent;
                     });
                     // todo add short desc with button for long one - eg Drought
-                    // todo add gen and pokemon info to popover
                 }
             } else {
                 console.log('Error', xhr.statusText);
