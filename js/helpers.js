@@ -49,19 +49,23 @@ function xhrRequest(ability) {
                     });
                 } else {
                     var gen = (response.generation.name).replace('generation-', 'gen-');
+
                     var pokemon = [];
                     response.pokemon.forEach(function (p) {
                         pokemon.push(p.pokemon.name);
                     });
+                    //todo add pokemon to description???
+
                     var entry = response.effect_entries[0];
                     var desc = entry.effect;
                     var shortDesc = entry.short_effect;
-                    var popoverContent = makePopover(desc, abilityUrl(ability.code), gen);
+
+                    var popoverContent = makePopover(desc, shortDesc, abilityUrl(ability.code), gen);
+
                     $('#' + ability.name.charAt(0) + ability.index).each(function () {
                         var $elem = $(this);
                         $elem.data('bs.popover').options.content = popoverContent;
                     });
-                    // todo add short desc with button for long one - eg Drought
                 }
             } else {
                 console.log('Error', xhr.statusText);

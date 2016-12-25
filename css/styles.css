@@ -64,3 +64,11 @@
 .gen {
     text-transform: uppercase;
 }
+
+.toggle {
+    cursor: pointer;
+    color: #2e6da4;
+    width: 100%;
+    text-align: center;
+
+}

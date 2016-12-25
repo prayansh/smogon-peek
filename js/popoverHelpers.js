@@ -25,19 +25,38 @@ function popoverOptionsAbility($elem, ability, placement) {
  * @param smogonUrl of item/ability using abilityUrl()/itemUrl()
  * @returns {Element}
  */
-function makePopover(description, smogonUrl, gen) {
+function makePopover(description, shortDesc, smogonUrl, gen) {
 
     var genDiv = individualDiv('gen', gen);
-    var descDiv = individualDiv('description', 'Description', description);
 
-    var smogonDiv = document.createElement('div');
-    smogonDiv.className = 'smogon-link';
-    smogonDiv.innerHTML = '<a href="' + smogonUrl + '" onclick="window.open(\'' + smogonUrl + '\', \'_blank\')">GOTO</a>';
+    var descDiv = individualDiv('description', 'Description', description);
+    var shortDiv = individualDiv('shortDescription', 'Description', shortDesc);
+    // Hide long description and display short Description
+    descDiv.style.display = 'none';
+    shortDiv.style.display = 'block';
+
+    var toggleExpand = document.createElement('div');
+    toggleExpand.className = 'toggle';
+    toggleExpand.innerText = 'Read More';
+    toggleExpand.onclick = function () {
+        if (descDiv.style.display == 'block') {
+            descDiv.style.display = 'none';
+            shortDiv.style.display = 'block';
+            toggleExpand.innerText = 'Read More';
+        }
+
+        else if (shortDiv.style.display == 'block') {
+            descDiv.style.display = 'block';
+            shortDiv.style.display = 'none';
+            toggleExpand.innerText = 'Read Less';
+        }
+    };
 
     var popoverElement = document.createElement('div');
     popoverElement.appendChild(genDiv);
     popoverElement.appendChild(descDiv);
-    // popoverElement.appendChild(smogonDiv);
+    popoverElement.appendChild(shortDiv);
+    popoverElement.appendChild(toggleExpand);
 
     return popoverElement;
 }
