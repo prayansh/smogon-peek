@@ -10,28 +10,22 @@ targetAbility.forEach(function (element, index) {
     var abilityCode = abilityName.toLowerCase().replace(' ', '-');
     var ability = {
         name: abilityName,
-        code: abilityCode
-    }
-    var elementLink = element.childNodes[0].attr('href');
-    // TODO check if actually required
-    // var profDiv = '<a id="' + prof.lastName.charAt(0) + prof.targetNum + '" href="' + targetLink + '" target="_blank" data-toggle="popover">' +
-    //     target[prof.targetNum].innerText + '</a>';
-    //
-    // target[prof.targetNum].outerHTML = profDiv;
+        code: abilityCode,
+        index: index,
+        div: element
+    };
+    //give element an id for future
+    element.id = abilityName.charAt(0) + index;
 
+    // Setup loading animation for each popover
     $('#' + abilityName.charAt(0) + index).each(function () {
         var $elem = $(this);
         $elem.popover(popoverOptionsAbility($elem, ability));
     });
 
     abilities.push(ability);
-})
+});
 
 for (var i = 0; i < abilities.length; i++) {
-    var searchUrl = ubcSearchUrl(abilities[i].code);
-    bindPopupsToAbility(searchUrl, abilities[i]);
-}
-
-function ubcSearchUrl(searchQuery) {
-    return 'http://pokeapi.co/api/v2/ability/' + searchQuery;
+    bindPopupsToAbility(abilities[i]);
 }

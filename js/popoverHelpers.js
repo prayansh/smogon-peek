@@ -34,7 +34,7 @@ function makePopover(description, smogonUrl) {
 
     var popoverElement = document.createElement('div');
     popoverElement.appendChild(descDiv);
-    popoverElement.appendChild(smogonDiv);
+    // popoverElement.appendChild(smogonDiv);
 
     return popoverElement;
 }
