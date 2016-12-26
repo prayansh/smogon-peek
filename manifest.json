@@ -25,7 +25,7 @@
   "content_scripts": [
     {
       "matches": [
-        "http://www.smogon.com/dex/xy/pokemon/*"
+        "*://www.smogon.com/*"
       ],
       "css": [
         "css/bootstrap.min.css",
