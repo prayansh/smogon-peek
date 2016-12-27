@@ -1,6 +1,6 @@
 {
   "name": "Smogon-Helper",
-  "version": "0.1",
+  "version": "0.3.6",
   "manifest_version": 2,
   "author": "Prayansh Srivastava, Mingyu Gao",
   "description": "Smogon popups for abilities/moves/items",

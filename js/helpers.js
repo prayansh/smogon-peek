@@ -36,7 +36,7 @@ function $x(path) {
 
 function xhrRequest(ability) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", abilityAPIUrl(abilities[i].code), true);
+    xhr.open("GET", abilityAPIUrl(ability.code), true);
     xhr.onreadystatechange = function (oEvent) {
         if (xhr.readyState === 4) {
             // If rest call is good
