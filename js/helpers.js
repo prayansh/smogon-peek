@@ -34,6 +34,10 @@ function $x(path) {
     return xnodes;
 }
 
+/**
+ * Makes a XMLHttpRequest to PokeApi REST API using ability.code
+ * @param ability
+ */
 function xhrRequest(ability) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", abilityAPIUrl(ability.code), true);
@@ -47,7 +51,8 @@ function xhrRequest(ability) {
                         var $elem = $(this);
                         $elem.data('bs.popover').options.content = popoverTextContentDiv('Ability Not Found');
                     });
-                } else {
+                }
+                else {
                     var gen = (response.generation.name).replace('generation-', 'gen-');
 
                     var pokemon = [];
