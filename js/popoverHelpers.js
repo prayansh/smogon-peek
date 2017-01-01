@@ -25,10 +25,7 @@ function popoverOptionsAbility($elem, ability, placement) {
  * @param smogonUrl of item/ability using abilityUrl()/itemUrl()
  * @returns {Element}
  */
-function makePopover(description, shortDesc, smogonUrl, gen) {
-
-    var genDiv = individualDiv('gen', gen);
-
+function makePopover(description, shortDesc, gen) {
     var descDiv = individualDiv('description', 'Description', description);
     var shortDiv = individualDiv('shortDescription', 'Description', shortDesc);
     // Hide long description and display short Description
@@ -51,9 +48,11 @@ function makePopover(description, shortDesc, smogonUrl, gen) {
             toggleExpand.innerText = 'Read Less';
         }
     };
-
     var popoverElement = document.createElement('div');
-    popoverElement.appendChild(genDiv);
+    if (gen) {
+        var genDiv = individualDiv('gen', gen);
+        popoverElement.appendChild(genDiv);
+    }
     popoverElement.appendChild(descDiv);
     popoverElement.appendChild(shortDiv);
     popoverElement.appendChild(toggleExpand);
