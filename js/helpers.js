@@ -92,22 +92,27 @@ function ajaxRequest(restUrl, ability) {
         url: restUrl,
         dataType: 'JSON',
         success: function (responseText) {
-            var response = JSON.parse(responseText);
-            if (response.detail == "Not found.") {
+            if (responseText.detail == "Not found.") {
                 $('#' + ability.name.charAt(0) + ability.index).each(function () {
                     var $elem = $(this);
                     $elem.data('bs.popover').options.content = popoverTextContentDiv('Ability Not Found');
                 });
-            } else {
-                var gen = response.generation.name;
+            }
+            else {
+                var gen = (responseText.generation.name).replace('generation-', 'gen-');
+
                 var pokemon = [];
-                response.pokemon.forEach(function (p) {
+                responseText.pokemon.forEach(function (p) {
                     pokemon.push(p.pokemon.name);
                 });
-                var entry = response.effect_entries[0];
+                //todo add pokemon to description???
+
+                var entry = responseText.effect_entries[0];
                 var desc = entry.effect;
                 var shortDesc = entry.short_effect;
-                var popoverContent = makePopover(desc, abilityUrl(ability.code)); // todo change name to desc
+
+                var popoverContent = makePopover(desc, shortDesc, abilityUrl(ability.code), gen);
+
                 $('#' + ability.name.charAt(0) + ability.index).each(function () {
                     var $elem = $(this);
                     $elem.data('bs.popover').options.content = popoverContent;
@@ -123,7 +128,7 @@ function ajaxRequest(restUrl, ability) {
     });
 }
 
-function bindPopupsToAbility(restUrl, ability) {
-    xhrRequest(restUrl, ability);
+function bindPopupsToAbility(ability) {
+    ajaxRequest(abilityAPIUrl(ability.code), ability);
     chrome.runtime.sendMessage('showPageAction');
 }
