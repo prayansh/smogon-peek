@@ -15,8 +15,7 @@ function smogonHelper() {
         var ability = {
             name: abilityName,
             code: abilityCode,
-            index: index,
-            div: element
+            index: index
         };
         //give element an id for future
         element.id = abilityName.charAt(0) + index;
