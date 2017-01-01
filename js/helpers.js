@@ -2,6 +2,10 @@
  * Created by Prayansh on 2016-12-21.
  */
 
+function itemAPIUrl(move_name) {
+    return 'http://pokeapi.co/api/v2/item/' + move_name;
+}
+
 function abilityAPIUrl(searchQuery) {
     return 'http://pokeapi.co/api/v2/ability/' + searchQuery;
 }
@@ -70,5 +74,37 @@ function bindPopupsToAbility(ability) {
         });
     };
     ajaxRequest(abilityAPIUrl(ability.code), successHandler, errorHandler);
+    chrome.runtime.sendMessage('showPageAction');
+}
+
+function bindPopupsToItems(item) {
+    var itemSuccess = function (responseText) {
+        if (responseText.detail === "Not found.") {
+            $('#' + item.name.charAt(0) + item.index).each(function () {
+                var $elem = $(this);
+                $elem.data('bs.popover').options.content = popoverTextContentDiv('Item Not Found');
+            });
+        }
+        else {
+            var entry = responseText.effect_entries[0];
+            var desc = (entry) ? entry.effect : "";
+            var shortDesc = (entry) ? entry.short_effect : "";
+            var category = responseText.category.name;
+            var popoverContent = makePopover(desc, shortDesc, category);
+
+            $('#' + item.name.charAt(0) + item.index).each(function () {
+                var $elem = $(this);
+                $elem.data('bs.popover').options.content = popoverContent;
+            });
+        }
+    };
+    var itemError = function () {
+        // console.log('Error', xhr.statusText);
+        $('#' + item.name.charAt(0) + item.index).each(function () {
+            var $elem = $(this);
+            $elem.data('bs.popover').options.content = popoverTextContentDiv('Item Not Found (API Error)');
+        });
+    };
+    ajaxRequest(itemAPIUrl(item.code), itemSuccess, itemError);
     chrome.runtime.sendMessage('showPageAction');
 }

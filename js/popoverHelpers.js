@@ -25,7 +25,7 @@ function popoverOptionsAbility($elem, ability, placement) {
  * @param smogonUrl of item/ability using abilityUrl()/itemUrl()
  * @returns {Element}
  */
-function makePopover(description, shortDesc, gen) {
+function makePopover(description, shortDesc, extra) {
     var descDiv = individualDiv('description', 'Description', description);
     var shortDiv = individualDiv('shortDescription', 'Description', shortDesc);
     // Hide long description and display short Description
@@ -49,8 +49,8 @@ function makePopover(description, shortDesc, gen) {
         }
     };
     var popoverElement = document.createElement('div');
-    if (gen) {
-        var genDiv = individualDiv('gen', gen);
+    if (extra) {
+        var genDiv = individualDiv('extra', extra);
         popoverElement.appendChild(genDiv);
     }
     popoverElement.appendChild(descDiv);
