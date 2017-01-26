@@ -4,39 +4,41 @@
 
 function smogonHelper() {
     loadAbilities();
-    loadItems();
+    // loadItems();
 }
 
 function loadAbilities() {
     // console.log('Finding Abilities');
-    var targetAbility,
-        abilities = [];
+
     // Extract all DOM elements with ability lists
-    targetAbility = $x("//ul[@class='AbilityList']/li");
-    // Create ability object for each ability in page and create dummy popovers
+    var targetAbility = $x("//ul[@class='AbilityList']/li");
+
+    var abilityDict = {};
     targetAbility.forEach(function (element, index) {
-        var abilityName = element.innerText.trim();
-        var abilityCode = abilityName.toLowerCase().replace(' ', '-');
-        var ability = {
-            name: abilityName,
-            code: abilityCode,
-            index: index
-        };
+        var name = element.innerText.trim();
 
         //give element an id for future (Essential)
-        element.id = abilityName.charAt(0) + index;
+        element.id = name.charAt(0) + index;
 
+        if (abilityDict[name] == undefined)
+            abilityDict[name] = [];
+
+        var abilityObj = {
+            name: name,
+            index: index
+        };
+        abilityDict[name].push(abilityObj);
         // Setup loading animation for each popover
-        $('#' + abilityName.charAt(0) + index).each(function () {
+        $('#' + name.charAt(0) + index).each(function () {
             var $elem = $(this);
-            $elem.popover(popoverOptionsAbility($elem, ability));
+            $elem.popover(popoverOptionsAbility($elem, abilityObj));
         });
-
-        abilities.push(ability);
     });
+
+
     // bind DOM with correct popovers
-    for (var i = 0; i < abilities.length; i++) {
-        bindPopupsToAbility(abilities[i]);
+    for (var abilityName in abilityDict) {
+        bindPopupsToAbility(abilityName, abilityDict[abilityName]);
     }
 }
 
@@ -80,7 +82,6 @@ var tHead = $x("//h1[@data-reactid='.0.1.1.1']");
 var observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
         smogonHelper();
-        // console.log('something changed');
     });
 });
 
