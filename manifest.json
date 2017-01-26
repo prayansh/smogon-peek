@@ -1,6 +1,6 @@
 {
   "name": "Smogon-Helper",
-  "version": "1.1.5",
+  "version": "1.2",
   "manifest_version": 2,
   "author": "Prayansh Srivastava",
   "description": "A small plugin for displaying popovers for Abilities on www.smogon.com",
