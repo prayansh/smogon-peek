@@ -22,7 +22,8 @@ function popoverOptionsAbility($elem, ability, placement) {
 /**
  *
  * @param description of item/ability
- * @param smogonUrl of item/ability using abilityUrl()/itemUrl()
+ * @param shortDesc
+ * @param extra
  * @returns {Element}
  */
 function makePopover(description, shortDesc, extra) {
