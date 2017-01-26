@@ -57,7 +57,7 @@ function bindPopupsToAbility(abilityName, abilityElements) {
     var successHandler = function (responseText) {
         if (responseText.detail == "Not found.") {
             abilityElements.forEach(function (item) {
-                $('#' + item.name.charAt(0) + item.index).each(function () {
+                $('#A' + item.name.charAt(0) + item.index).each(function () {
                     var $elem = $(this);
                     $elem.data('bs.popover').options.content = popoverTextContentDiv('Ability Not Found');
                 });
@@ -72,7 +72,7 @@ function bindPopupsToAbility(abilityName, abilityElements) {
             var popoverContent = makePopover(desc, shortDesc, gen);
 
             abilityElements.forEach(function (item) {
-                $('#' + item.name.charAt(0) + item.index).each(function () {
+                $('#A' + item.name.charAt(0) + item.index).each(function () {
                     var $elem = $(this);
                     $elem.data('bs.popover').options.content = popoverContent;
                 });
@@ -81,7 +81,7 @@ function bindPopupsToAbility(abilityName, abilityElements) {
     };
     var errorHandler = function () {
         abilityElements.forEach(function (item) {
-            $('#' + item.name.charAt(0) + item.index).each(function () {
+            $('#A' + item.name.charAt(0) + item.index).each(function () {
                 var $elem = $(this);
                 $elem.data('bs.popover').options.content = popoverTextContentDiv('Ability Not Found (API Error)');
             });
@@ -91,12 +91,14 @@ function bindPopupsToAbility(abilityName, abilityElements) {
     chrome.runtime.sendMessage('showPageAction');
 }
 
-function bindPopupsToItems(item) {
+function bindPopupsToItems(itemName, itemElements) {
     var itemSuccess = function (responseText) {
         if (responseText.detail === "Not found.") {
-            $('#' + item.name.charAt(0) + item.index).each(function () {
-                var $elem = $(this);
-                $elem.data('bs.popover').options.content = popoverTextContentDiv('Item Not Found');
+            itemElements.forEach(function (item) {
+                $('#I' + item.name.charAt(0) + item.index).each(function () {
+                    var $elem = $(this);
+                    $elem.data('bs.popover').options.content = popoverTextContentDiv('Item Not Found');
+                });
             });
         }
         else {
@@ -105,20 +107,22 @@ function bindPopupsToItems(item) {
             var shortDesc = (entry) ? entry.short_effect : "";
             var category = responseText.category.name;
             var popoverContent = makePopover(desc, shortDesc, category);
-
-            $('#' + item.name.charAt(0) + item.index).each(function () {
-                var $elem = $(this);
-                $elem.data('bs.popover').options.content = popoverContent;
+            itemElements.forEach(function (item) {
+                $('#I' + item.name.charAt(0) + item.index).each(function () {
+                    var $elem = $(this);
+                    $elem.data('bs.popover').options.content = popoverContent;
+                });
             });
         }
     };
     var itemError = function () {
-        // console.log('Error', xhr.statusText);
-        $('#' + item.name.charAt(0) + item.index).each(function () {
-            var $elem = $(this);
-            $elem.data('bs.popover').options.content = popoverTextContentDiv('Item Not Found (API Error)');
+        itemElements.forEach(function (item) {
+            $('#I' + item.name.charAt(0) + item.index).each(function () {
+                var $elem = $(this);
+                $elem.data('bs.popover').options.content = popoverTextContentDiv('Item Not Found (API Error)');
+            });
         });
     };
-    ajaxRequest(itemAPIUrl(item.code), itemSuccess, itemError);
+    ajaxRequest(itemAPIUrl(getCodeForm(itemName)), itemSuccess, itemError);
     chrome.runtime.sendMessage('showPageAction');
 }

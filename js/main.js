@@ -4,12 +4,10 @@
 
 function smogonHelper() {
     loadAbilities();
-    // loadItems();
+    loadItems();
 }
 
 function loadAbilities() {
-    // console.log('Finding Abilities');
-
     // Extract all DOM elements with ability lists
     var targetAbility = $x("//ul[@class='AbilityList']/li");
 
@@ -18,7 +16,7 @@ function loadAbilities() {
         var name = element.innerText.trim();
 
         //give element an id for future (Essential)
-        element.id = name.charAt(0) + index;
+        element.id = 'A' + name.charAt(0) + index;
 
         if (abilityDict[name] == undefined)
             abilityDict[name] = [];
@@ -29,12 +27,11 @@ function loadAbilities() {
         };
         abilityDict[name].push(abilityObj);
         // Setup loading animation for each popover
-        $('#' + name.charAt(0) + index).each(function () {
+        $('#A' + name.charAt(0) + index).each(function () {
             var $elem = $(this);
             $elem.popover(popoverOptionsAbility($elem, abilityObj));
         });
     });
-
 
     // bind DOM with correct popovers
     for (var abilityName in abilityDict) {
@@ -43,35 +40,33 @@ function loadAbilities() {
 }
 
 function loadItems() {
-    // console.log('Finding Items');
-    var targetItem,
-        items = [];
-    // Extract all DOM elements with ability lists
-    targetItem = $x("//ul[@class='ItemList']/li");
-    // Create ability object for each ability in page and create dummy popovers
+    var targetItem = $x("//ul[@class='ItemList']/li");
+
+    var itemDict = {};
     targetItem.forEach(function (element, index) {
-        var itemName = element.innerText.trim();
-        var itemCode = itemName.toLowerCase().replace(' ', '-');
-        var item = {
-            name: itemName,
-            code: itemCode,
-            index: index
-        };
+        var name = element.innerText.trim();
 
         //give element an id for future (Essential)
-        element.id = itemName.charAt(0) + index;
+        element.id = 'I' + name.charAt(0) + index;
 
+        if (itemDict[name] == undefined)
+            itemDict[name] = [];
+
+        var itemObj = {
+            name: name,
+            index: index
+        };
+        itemDict[name].push(itemObj);
         // Setup loading animation for each popover
-        $('#' + itemName.charAt(0) + index).each(function () {
+        $('#I' + name.charAt(0) + index).each(function () {
             var $elem = $(this);
-            $elem.popover(popoverOptionsAbility($elem, item));
+            $elem.popover(popoverOptionsAbility($elem, itemObj));
         });
-
-        items.push(item);
     });
+
     // bind DOM with correct popovers
-    for (var i = 0; i < items.length; i++) {
-        bindPopupsToItems(items[i]);
+    for (var itemName in itemDict) {
+        bindPopupsToItems(itemName, itemDict[itemName]);
     }
 }
 
@@ -80,7 +75,7 @@ var tBody = $x("//main[@data-reactid='.0.1']");
 var tHead = $x("//h1[@data-reactid='.0.1.1.1']");
 
 var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
+    mutations.forEach(function (_mutation) {
         smogonHelper();
     });
 });
